@@ -1,16 +1,9 @@
-# Use the base image from Astronomer
-FROM quay.io/astronomer/astro-runtime:9.1.0-python-3.9-base
+FROM quay.io/astronomer/astro-runtime:9.6.0-python-3.9-base
 
-# Create a virtual environment for dbt
 RUN python -m venv dbt_venv
+RUN /bin/bash -c "source dbt_venv/bin/activate && pip install --no-cache-dir dbt-snowflake && deactivate"
 
-# Activate the virtual environment and install dbt-snowflake
-RUN /bin/bash -c "source dbt_venv/bin/activate && \
-    pip install --no-cache-dir dbt-snowflake && \
-    deactivate"
+RUN pip install --upgrade pip
 
-# Copy the requirements.txt file to the container
-COPY requirements.txt /requirements.txt
-
-# Install the requirements from the requirements.txt file
-RUN pip install --no-cache-dir -r /requirements.txt
+RUN pip install astronomer-cosmos
+RUN pip install apache-airflow-providers-snowflake
