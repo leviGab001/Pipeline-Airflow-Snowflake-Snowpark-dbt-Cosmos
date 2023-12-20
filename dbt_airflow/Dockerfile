@@ -7,3 +7,4 @@ RUN pip install --upgrade pip
 
 RUN pip install astronomer-cosmos
 RUN pip install apache-airflow-providers-snowflake
+
