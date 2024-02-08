@@ -1,10 +1,5 @@
-FROM quay.io/astronomer/astro-runtime:9.6.0-python-3.9-base
+FROM quay.io/astronomer/astro-runtime:8.8.0
 
-RUN python -m venv dbt_venv
-RUN /bin/bash -c "source dbt_venv/bin/activate && pip install --no-cache-dir dbt-snowflake && deactivate"
 
-RUN pip install --upgrade pip
-
-RUN pip install astronomer-cosmos
-RUN pip install apache-airflow-providers-snowflake
-
+# install dbt into a virtual environment
+RUN python -m venv dbt_venv && source dbt_venv/bin/activate && pip install --no-cache-dir dbt-snowflake && pip install --no-cache-dir dbt-postgres && deactivate
